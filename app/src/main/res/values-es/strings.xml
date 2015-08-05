@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Principal</string>
+
+    <string name="action_settings">Configuracion</string>
+    <string name="action_search">Buscar</string>
+    <string name="title_activity_display_message">Mis Mensajes</string>
+    <string name="button_send">Manda</string>
+    <string name="edit_message">Manda un mensaje </string>
+
+</resources>
