@@ -3,25 +3,21 @@ package com.simplea.jonnylee.myfirstapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 
-public class DisplayMessageActivity extends FragmentActivity {
+public class DisplayMessageActivity extends AppCompatActivity {
+    ArticleFragment firstFragment;
+    String receivedMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_message);
-
-        //Using intent to get the message from the previous activity
-        Intent intent = getIntent();
-        TextView textView = (TextView) findViewById(R.id.view_message);
-        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-        textView.setText(message);
-        textView.setTextSize(40);
 
         //adding and removing fragment using fragment manager
         if(findViewById(R.id.fragment_container) != null){
@@ -30,13 +26,22 @@ public class DisplayMessageActivity extends FragmentActivity {
                 return;
             }
 
-            HeadlinesFragment firstFragment = new HeadlinesFragment();
+            firstFragment = new ArticleFragment();
 
-            firstFragment.setArgument(getIntent().getExtras());
+            firstFragment.setArguments(getIntent().getExtras());
+            receivedMessage = getIntent().getStringExtra(MainActivity.EXTRA_MESSAGE);
 
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, firstFragment).commit();
         }
 
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        TextView viewMessage = firstFragment.getTextView();
+        viewMessage.setText(receivedMessage);
+        viewMessage.setTextSize(40);
     }
 
     @Override
